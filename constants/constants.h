@@ -9,8 +9,10 @@
 char *MISSING_FILE_PARAM_MSG;
 char *LIST_CREATION_SUCCESS_MSG;
 char *LIST_CREATION_SUCCESS_EMPTY_MSG;
-char *USER_OPTIONS;
-char *OPTION_PROMPT;
+char *USER_MAIN_MENU_LIST;
+char *USER_PROCESS_FILE_MENU_LIST;
+char *MAIN_MENU_OPTION_PROMPT;
+char *FILE_PROCESS_MENU_OPTION_PROMPT;
 char *INVALID_USER_INPUT_MSG;
 char *GOODBYE_MSG;
 char *INPUT_YEAR_MSG;
@@ -24,7 +26,11 @@ char *LANGUAGE_RECORDS_MSG;
 int arrayContainsValue(int *, int, int);
 void *promptUserForLanguage();
 int hasRequiredParams(int argc);
-int promptUserForFlowOption();
+int handleInputOptionRequest(char *optionPromptMessage, char *menuList);
+int promptUserForMainMenuOption();
+int promptUserForFileProcessingMenuOption();
 unsigned short promptUserForMovieYear();
+int printGoodByeAndReturnSuccess();
+void printWrongOptionMessage();
 
 #endif

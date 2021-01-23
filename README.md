@@ -1,15 +1,17 @@
-# CS344-Assignment1
-CS344-Assignment1 Movie List reader in C\
+# CS344-Assignment2
+CS344-Assignment2 Files & Directories\
 Author: Pablo Turati - turatip@oregonstate.edu\
 Licence: MIT. Refer to `LICENSE` for details.
 
 ## Project Description
 
-Application that reads data from a CSV file, provides user with the following functionality:
+This application provides the following functionality
 
-1. Movies release in the specified year.
-2. Highest rated movie for each year.
-3. Movies and their year of release for a specific language.
+- Reads directory entries
+- Finds a file in the current directory based on user specified criteria
+- Reads and processes the data in the chosen file
+- Creates a directory
+- Creates new files in the newly created directory and writes processed data to these files
 
 ## Compile instructions
 

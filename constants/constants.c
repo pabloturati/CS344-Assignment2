@@ -7,8 +7,10 @@
 char *MISSING_FILE_PARAM_MSG = "Missing file to read\n";
 char *LIST_CREATION_SUCCESS_MSG = "Processed file %s and parsed data for %zu movies\n\n";
 char *LIST_CREATION_SUCCESS_EMPTY_MSG = "Processed file but list is empty\n\n";
-char *USER_OPTIONS = "1. Show movies released in the specified year.\n2. Show highest rated movie for each year.\n3. Show the title and year of release of all movies in a specific language.\n4. Exit from the program.\n";
-char *OPTION_PROMPT = "Enter a choice from 1 to 4: ";
+char *USER_MAIN_MENU_LIST = "\n1. Select file to process\n2. Exit the program\n";
+char *USER_PROCESS_FILE_MENU_LIST = "\nWhich file you want to process?\nEnter 1 to pick the largest file\nEnter 2 to pick the smallest file\nEnter 3 to specify the name of a file\n";
+char *MAIN_MENU_OPTION_PROMPT = "Enter a choice from 1 to 2: ";
+char *FILE_PROCESS_MENU_OPTION_PROMPT = "Enter a choice from 1 to 3: ";
 char *INVALID_USER_INPUT_MSG = "\nYou entered an incorrect choice. Try again.\n";
 char *GOODBYE_MSG = "Freeing allocated memory done, good bye!\n";
 
@@ -73,17 +75,58 @@ void *promptUserForLanguage()
 }
 
 /* 
-Prompts user for an option (1-4) for the program control flow
+Handles option request
+Input: optionPromptMessage (string), menuList (string)
+Output: option (integer)
+*/
+int handleInputOptionRequest(char *optionPromptMessage, char *menuList)
+{
+  int option;
+  puts(menuList);
+  printf("%s", optionPromptMessage);
+  scanf("%d", &option);
+  return option;
+}
+
+/* 
+Prompts user for an option (1 and 2) for the menu option control flow
 Input: None
 Output: option (integer)
 */
-int promptUserForFlowOption()
+int promptUserForMainMenuOption()
 {
-  int option;
-  puts(USER_OPTIONS);
-  printf("%s", OPTION_PROMPT);
-  scanf("%d", &option);
-  return option;
+  return handleInputOptionRequest(MAIN_MENU_OPTION_PROMPT, USER_MAIN_MENU_LIST);
+}
+
+/* 
+Prompts user for an option (1 thru 3) for the process file menu control flow
+Input: None
+Output: option (integer)
+*/
+int promptUserForFileProcessingMenuOption()
+{
+  return handleInputOptionRequest(FILE_PROCESS_MENU_OPTION_PROMPT, USER_PROCESS_FILE_MENU_LIST);
+}
+
+/* 
+Prints success exit message and returns success message
+Input: None
+Output: 0 (integer)
+*/
+int printGoodByeAndReturnSuccess()
+{
+  printf("%s", GOODBYE_MSG);
+  return EXIT_SUCCESS;
+}
+
+/* 
+Communicates to user that he/she chose wrong option
+Input: None
+Output: Void. Prints message to srdout
+*/
+void printWrongOptionMessage()
+{
+  puts(INVALID_USER_INPUT_MSG);
 }
 
 /* 

@@ -63,3 +63,6 @@ movies
 # Markdown outputs
 README.jpeg
 README.pdf
+
+#System files
+.DS_Store

@@ -15,3 +15,5 @@ gcc --std=gnu99 -o movies main.c lib_movies.a
 
 # Removes temporary files
 rm -f constants.o movieList.o lib_movies.a
+
+./movies movies_sample_1.csv
