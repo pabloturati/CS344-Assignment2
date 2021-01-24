@@ -17,34 +17,20 @@ whose name starts with the prefix movies_ and automatically process it.
 */
 
 /*
-
-// Input:
-// Output:
-// */
-// char *findSmallestFile()
-// {
-// }
-// /*
-
-// Input:
-// Output:
-// */
-// char *findLargestFile()
-// {
-// }
-
-// Function to open a file
-int findFileLargestFileFromPrefix()
+Returns largest file with same prefix in current directory.  
+Input: none
+Output: 
+*/
+char *findSmallestFileFromPrefix()
 {
-
   DIR *currDir = opendir(".");
   struct dirent *dirPtr;
   struct stat dirMetaData;
 
-  struct file_data largest;
-  largest.size = 0;
+  struct file_data smallest;
 
-  // printf("%llu", largest.size);
+  //Sets initial smallest size to 0 to default smallest to first file
+  smallest.size = 0;
 
   while ((dirPtr = readdir(currDir)) != NULL)
   {
@@ -52,17 +38,46 @@ int findFileLargestFileFromPrefix()
     {
       //Get metadata for current file entry
       stat(dirPtr->d_name, &dirMetaData);
-      printf("%s, %lld \n", dirPtr->d_name, dirMetaData.st_size);
-      if (largest.size == -1 || dirMetaData.st_size > largest.size)
+      if (smallest.size == 0 || dirMetaData.st_size < smallest.size)
       {
-        printf("Initializing with ");
-        largest.name = dirPtr->d_name;
-        largest.size = dirMetaData.st_size;
-        printf("%s, %lld \n", largest.name, largest.size);
+        smallest.name = dirPtr->d_name;
+        smallest.size = dirMetaData.st_size;
       }
     }
   }
   closedir(currDir);
-  printf("largest is %s\n", largest.name);
-  return 1;
+  return smallest.name;
+}
+
+/*
+Returns largest file with same prefix in current directory.  
+Input: none
+Output: 
+*/
+char *findLargestFileFromPrefix()
+{
+  DIR *currDir = opendir(".");
+  struct dirent *dirPtr;
+  struct stat dirMetaData;
+
+  struct file_data largest;
+
+  //Sets initial largest size to 0 to default largest to first file
+  largest.size = 0;
+
+  while ((dirPtr = readdir(currDir)) != NULL)
+  {
+    if (strMatchesPrefix(dirPtr->d_name, FILE_NAME_PREFIX))
+    {
+      //Get metadata for current file entry
+      stat(dirPtr->d_name, &dirMetaData);
+      if (largest.size == 0 || dirMetaData.st_size > largest.size)
+      {
+        largest.name = dirPtr->d_name;
+        largest.size = dirMetaData.st_size;
+      }
+    }
+  }
+  closedir(currDir);
+  return largest.name;
 }

@@ -34,5 +34,6 @@ unsigned short promptUserForMovieYear();
 int printGoodByeAndReturnSuccess();
 void printWrongOptionMessage();
 int strMatchesPrefix(char *, char *);
+void printFileToProcessMessage(char *fileName);
 
 #endif

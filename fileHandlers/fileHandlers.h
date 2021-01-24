@@ -1,6 +1,7 @@
 #ifndef FILE_HANDLERS_H
 #define FILE_HANDLERS_H
 
-int findFileLargestFileFromPrefix();
+char *findLargestFileFromPrefix();
+char *findSmallestFileFromPrefix();
 
 #endif
