@@ -3,6 +3,9 @@
 #include <string.h>
 #include "constants.h"
 
+// Constants
+char *FILE_NAME_PREFIX = "movies_";
+
 // User interface messages
 char *MISSING_FILE_PARAM_MSG = "Missing file to read\n";
 char *LIST_CREATION_SUCCESS_MSG = "Processed file %s and parsed data for %zu movies\n\n";
@@ -141,4 +144,14 @@ unsigned short promptUserForMovieYear()
   scanf("%hu", &year);
   printf(SELECTED_YEAR_MSG, year);
   return year;
+}
+
+/*
+Function that matches a string to a prefix
+Input: str (string), prefix (string)
+Output: 1 for TRUE, -1
+*/
+int strMatchesPrefix(char *str, char *prefix)
+{
+  return strncmp(prefix, str, strlen(prefix)) == 0;
 }

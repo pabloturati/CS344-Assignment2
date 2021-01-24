@@ -6,6 +6,7 @@
 #define MAX_LANGUAGE_LENGTH 20
 #define MIN_ARGUMENT_COUNT 2
 
+char *FILE_NAME_PREFIX;
 char *MISSING_FILE_PARAM_MSG;
 char *LIST_CREATION_SUCCESS_MSG;
 char *LIST_CREATION_SUCCESS_EMPTY_MSG;
@@ -32,5 +33,6 @@ int promptUserForFileProcessingMenuOption();
 unsigned short promptUserForMovieYear();
 int printGoodByeAndReturnSuccess();
 void printWrongOptionMessage();
+int strMatchesPrefix(char *, char *);
 
 #endif
