@@ -20,7 +20,8 @@ whose name starts with the prefix movies_ and automatically process it.
 /*
 Returns largest file with same prefix in current directory.  
 Input: none
-Output: 
+Output: name of smallest file in current directory (string)
+Code adapted from 3_5_stat_example 
 */
 char *findSmallestFileFromPrefix()
 {
@@ -53,7 +54,8 @@ char *findSmallestFileFromPrefix()
 /*
 Returns largest file with same prefix in current directory.  
 Input: none
-Output: 
+Output: name of largest file in current directory (string)
+Code adapted from 3_5_stat_example 
 */
 char *findLargestFileFromPrefix()
 {
@@ -83,6 +85,12 @@ char *findLargestFileFromPrefix()
   return largest.name;
 }
 
+/*
+Prompt user for input and returns largest file with same prefix in current directory.  
+Input: userInput memory allocation (pass-by-reference)
+Output: TRUE if input found (int), points userInput to value string 
+Code adapted from 3_5_stat_example 
+*/
 int findFilenameFromuserInput(char *userInput)
 {
   printf("%s", FILENAME_PROMPT);
@@ -97,10 +105,38 @@ int findFilenameFromuserInput(char *userInput)
     if (strcmp(dirPtr->d_name, userInput) == 0)
     {
       closedir(currDir);
+      // free(dirPtr);
       return TRUE;
     }
   }
   printFileNotFoundMessage(userInput);
   closedir(currDir);
+  // free(dirPtr);
   return FALSE;
+}
+
+int mkdir(const char *pathname, mode_t mode);
+
+/*
+Creates a new directory by concatenating ONID + movies + 
+Input: userInput memory allocation (pass-by-reference)
+Output: TRUE if input found (int), points userInput to value string 
+Refence: Code adapted from 3_5_stat_example 
+*/
+
+int createFolderWithRandom()
+{
+  // Crate random
+  int randomNum = createRandomNumberInRange();
+
+  // Allocate memory for directory name
+  char *dirname = (char *)calloc(MAX_POSIX_FILENAME_LENGTH, sizeof(char));
+
+  // Concatenate
+  sprintf(dirname, "%s.%s.%d", ONID_ID_STR, MOVIE_STR, randomNum);
+
+  // Create dir
+  int status = mkdir(dirname, DIR_PERMISSIONS);
+  free(dirname);
+  return status;
 }

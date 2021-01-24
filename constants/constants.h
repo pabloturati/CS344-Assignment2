@@ -2,9 +2,13 @@
 #define CONSTANTS_H
 #define TRUE 1
 #define FALSE 0
-#define MAX_FILENAME_LENGTH 255
+#define MAX_POSIX_FILENAME_LENGTH 255
 
 char *FILE_NAME_PREFIX;
+char *ONID_ID_STR;
+char *MOVIE_STR;
+int DIR_PERMISSIONS;
+
 char *USER_MAIN_MENU_LIST;
 char *USER_PROCESS_FILE_MENU_LIST;
 char *MAIN_MENU_OPTION_PROMPT;
@@ -22,5 +26,6 @@ void printWrongOptionMessage();
 int strMatchesPrefix(char *, char *);
 void printFileToProcessMessage(char *);
 void printFileNotFoundMessage(char *);
+int createRandomNumberInRange();
 
 #endif

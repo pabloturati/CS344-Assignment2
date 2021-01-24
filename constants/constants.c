@@ -5,6 +5,11 @@
 
 // Constants
 char *FILE_NAME_PREFIX = "movies_";
+char *ONID_ID_STR = "turatip";
+char *MOVIE_STR = "movies";
+int UPPER_RAN_LIM = 99999;
+int LOW_RAN_LIM = 0;
+int DIR_PERMISSIONS = 0750;
 
 // User interface messages
 char *USER_MAIN_MENU_LIST = "\n1. Select file to process\n2. Exit the program\n";
@@ -94,7 +99,7 @@ void printFileToProcessMessage(char *filename)
   printf(PROCESSING_FILE_CONFIRM_MSG, filename);
 }
 
-// Data validation methods
+// Data handling methods
 
 /*
 Function that matches a string to a prefix
@@ -104,4 +109,17 @@ Output: 1 for TRUE, -1
 int strMatchesPrefix(char *str, char *prefix)
 {
   return strncmp(prefix, str, strlen(prefix)) == 0;
+}
+
+/*
+Function to create a random number in the range 0 -> 99999
+Input: str (string), prefix (string)
+Output: 1 for TRUE, -1
+
+Refrence:  Adapted from code from https://www.geeksforgeeks.org/rand-and-srand-in-ccpp/
+ and https://www.geeksforgeeks.org/generating-random-number-range-c/
+*/
+int createRandomNumberInRange()
+{
+  return (rand() % (UPPER_RAN_LIM - LOW_RAN_LIM + 1)) + LOW_RAN_LIM;
 }
