@@ -3,5 +3,6 @@
 
 char *findLargestFileFromPrefix();
 char *findSmallestFileFromPrefix();
+int findFilenameFromuserInput(char *);
 
 #endif

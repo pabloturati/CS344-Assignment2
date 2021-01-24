@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "constants/constants.h"
-#include "movieList/movieList.h"
 #include "fileHandlers/fileHandlers.h"
 
-void processFileMenu()
+void processFileMenu(char *userInput)
 {
   int option;
   char *fileToProcess;
@@ -26,7 +25,10 @@ void processFileMenu()
       break;
     // 3 - to specify the name of a file
     case 3:
-      printf("second 3");
+      if (findFilenameFromuserInput(userInput))
+      {
+        printFileToProcessMessage(userInput);
+      }
       break;
     // Other - Print bad input message
     default:
@@ -38,6 +40,7 @@ void processFileMenu()
 int main()
 {
   int option;
+  char *userInput = (char *)calloc(MAX_FILENAME_LENGTH + 1, sizeof(char));
   do
   {
     option = promptUserForMainMenuOption();
@@ -45,7 +48,7 @@ int main()
     {
     // 1 - Select file to process
     case 1:
-      processFileMenu();
+      processFileMenu(userInput);
       break;
     // 2 - Exit the program
     case 2:

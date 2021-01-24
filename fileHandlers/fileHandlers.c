@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <string.h>
 #include "fileHandlers.h"
 #include "../constants/constants.h"
 
@@ -80,4 +81,26 @@ char *findLargestFileFromPrefix()
   }
   closedir(currDir);
   return largest.name;
+}
+
+int findFilenameFromuserInput(char *userInput)
+{
+  printf("%s", FILENAME_PROMPT);
+  scanf("%s", userInput);
+
+  DIR *currDir = opendir(".");
+  struct dirent *dirPtr;
+  struct stat dirMetaData;
+
+  while ((dirPtr = readdir(currDir)) != NULL)
+  {
+    if (strcmp(dirPtr->d_name, userInput) == 0)
+    {
+      closedir(currDir);
+      return TRUE;
+    }
+  }
+  printFileNotFoundMessage(userInput);
+  closedir(currDir);
+  return FALSE;
 }
