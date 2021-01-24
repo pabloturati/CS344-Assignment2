@@ -121,7 +121,7 @@ int mkdir(const char *pathname, mode_t mode);
 Creates a new directory by concatenating ONID + movies + 
 Input: userInput memory allocation (pass-by-reference)
 Output: TRUE if input found (int), points userInput to value string 
-Refence: Code adapted from 3_5_stat_example 
+Refence: Code adapted from 3_5_stat_example and https://www.geeksforgeeks.org/sprintf-in-c/
 */
 
 int createFolderWithRandom()
@@ -132,10 +132,10 @@ int createFolderWithRandom()
   // Allocate memory for directory name
   char *dirname = (char *)calloc(MAX_POSIX_FILENAME_LENGTH, sizeof(char));
 
-  // Concatenate
+  // Concatenate. Code adapted from https://www.geeksforgeeks.org/sprintf-in-c/
   sprintf(dirname, "%s.%s.%d", ONID_ID_STR, MOVIE_STR, randomNum);
 
-  // Create dir
+  // Create dir. Code adapted from 3_5_stat_example
   int status = mkdir(dirname, DIR_PERMISSIONS);
   free(dirname);
   return status;

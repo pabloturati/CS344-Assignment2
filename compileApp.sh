@@ -1,19 +1,50 @@
 #! /bin/bash
 
-# Conditional cleanup space from previously compiled files
-rm -f movies constants.o fileHandlers.o lib_movies.a
+# Cleans previously compiled files and created folders
+function preCompileClean() {
+  rm -f movies constants.o fileHandlers.o movieList.o lib_movies.a pturati.movies.*
+}
 
-# Create precompiled objects
-gcc --std=gnu99 -c constants/constants.c
-gcc --std=gnu99 -c fileHandlers/fileHandlers.c
+# Cleans space of temporary compile files
+function postCompileClean() {
+  rm -f constants.o fileHandlers.o movieList.o lib_movies.a
+}
 
-# Creates external file archive
-ar -r lib_movies.a constants.o fileHandlers.o
+function generateModuleObjectsAndArchive() {
+  # Create precompiled objects
+  gcc --std=gnu99 -c constants/constants.c
+  gcc --std=gnu99 -c fileHandlers/fileHandlers.c
+  gcc --std=gnu99 -c movieList/movieList.c
+
+  # Creates archive with objects
+  ar -r lib_movies.a constants.o fileHandlers.o movieList.o
+}
 
 # Compiles main
-gcc --std=gnu99 -o movies main.c lib_movies.a
+function compileMainAndArchive() {
+  gcc --std=gnu99 -o movies main.c lib_movies.a
+}
 
-# Removes temporary files
-rm -f constants.o lib_movies.a fileHandlers.o
+function main() {
+  # Pre cleaning, removes leftovers from previous runs
+  preCompileClean
 
-./movies movies_sample_1.csv
+  # Compilation step
+  generateModuleObjectsAndArchive
+  compileMainAndArchive
+
+  # Pre cleaning to eliminate temporary files
+  postCompileClean
+
+  # Handles parameters to execute.
+  # Param e -> triggers executable
+  while getopts "e" flag; do
+    case $flag in
+    e) ./movies ;;
+    esac
+    shift
+  done
+}
+
+# Execute this script passing params to main
+main "$@"
