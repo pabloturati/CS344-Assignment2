@@ -1,5 +1,5 @@
 # CS344-Assignment2
-CS344-Assignment2 Files & Directories\
+CS344-Assignment 2 Files & Directories\
 Author: Pablo Turati - turatip@oregonstate.edu\
 Licence: MIT. Refer to `LICENSE` for details.
 
@@ -23,25 +23,21 @@ This application includes a bash script to build and deploy the runner (compileA
 
 `$ chmod +x compileApp.sh`
 
-Once it is ready, you may execute the compile instructions by running from the project root:
+You may execute the compile instructions by running from the project root:
 
 `$ ./compileApp.sh`
 
-This will generate a `movies` exectable file as output. Refer to the next section on how to run the application and pass parameters.
+This will generate a `movies_by_year` exectable file as output. Refer to the next section on how to run the application and pass parameters.
 
 ### Option 2.  Individual commands
 
-Refer to the contents of `compileApp.sh` for a detailed command list on how to manually compile using command line.  Notice that this project was designed to be compiled with GNU99 standards.  Please refer to `compuleApp.sh` for details.
+Refer to the contents of `compileApp.sh` for a detailed command list on how to manually compile using command line.  Notice that this project was designed to be compiled with GNU99 standards.
 
 ## Run procedure
 
-Once the application executable has been created `movies`. It can be run as follows:
+Once the application executable has been created `movies_by_year`. It can be run as follows:
 
-`$ ./movies <filename.csv>`
-
-An example where the file name is: `movies_sample_1.csv` would be:
-
-`$ ./movies movies_sample_1.csv`
+`$ ./movies_by_year`
 
 Where movies_sample_file must be a comma-separated file (.csv) with the following structure and application data type interpretation:
 
@@ -68,8 +64,11 @@ root
 └── movieList
     ├── movieList.c
     └── movieList.h
+└── fileHandlers
+    ├── fileHandlers.c
+    └── fileHandlers.h
 ```
 
 ## Version control
 
- Link to the repository is available at [here](https://github.com/pabloturati/CS344-Assignment1).  However, due to this being an Oregon State University assignment, it will remain private and public access will become available after April, 2021.
+ Link to the repository is available at [here](https://github.com/pabloturati/CS344-Assignment2).  However, due to this being an Oregon State University assignment, it will remain private and public access will become available after April, 2021.
