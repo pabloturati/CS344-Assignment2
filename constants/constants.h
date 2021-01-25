@@ -23,6 +23,7 @@ char *LIST_CREATION_SUCCESS_EMPTY_MSG;
 char *DIRECTORY_CREATION_SUCCESS_MSG;
 char *CSV_FILE_EXTENSION;
 char *INVALID_FILENAME_MSG;
+char *NO_FILE_FOUND_IN_FOLDER_MSG;
 
 int handleInputOptionRequest(char *, char *);
 int promptUserForMainMenuOption();

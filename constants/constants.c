@@ -26,6 +26,7 @@ char *LIST_CREATION_SUCCESS_MSG = "\nProcessed file %s and parsed data for %zu m
 char *LIST_CREATION_SUCCESS_EMPTY_MSG = "Processed file but list is empty\n\n";
 char *DIRECTORY_CREATION_SUCCESS_MSG = "Created directory with name %s\n";
 char *INVALID_FILENAME_MSG = "Sorry, \"%s\" is not a CSV file\n";
+char *NO_FILE_FOUND_IN_FOLDER_MSG = "\nFailed to find a valid csv file in this folder\n";
 
 /**********  User interaction methods     ********/
 

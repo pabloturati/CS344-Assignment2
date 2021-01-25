@@ -5,7 +5,9 @@
 #include <string.h>
 #include "fileHandlers.h"
 #include "../constants/constants.h"
+#include "../movieList/movieList.h"
 
+/* Struct to hold file object name and size */
 struct file_data
 {
   off_t size;
@@ -13,17 +15,13 @@ struct file_data
 };
 
 /*
-The program finds the largest file with the extension csv in the current directory
-whose name starts with the prefix movies_ and automatically process it.
-*/
-
-/*
 Returns largest file with same prefix in current directory.  
-Input: none
-Output: name of smallest file in current directory (string)
+Input: fileToProcess (string) - pass-by-reference
+Output: name of smallest file in current directory (string by reference), 
+  TRUE for sucess, FALSE and error message
 Code adapted from 3_5_stat_example 
 */
-char *findSmallestFileFromPrefix()
+int findSmallestFileFromPrefix(char *fileToProcess)
 {
   DIR *currDir = opendir(".");
   struct dirent *dirPtr;
@@ -48,16 +46,26 @@ char *findSmallestFileFromPrefix()
     }
   }
   closedir(currDir);
-  return smallest.name;
+
+  // If not file was found in the loop
+  if (smallest.size == 0)
+  {
+    printf("%s", NO_FILE_FOUND_IN_FOLDER_MSG);
+    return FALSE;
+  }
+  // Else copy
+  strcpy(fileToProcess, smallest.name);
+  return TRUE;
 }
 
 /*
 Returns largest file with same prefix in current directory.  
-Input: none
-Output: name of largest file in current directory (string)
+Input: fileToProcess (string) - pass-by-reference
+Output: name of smallest file in current directory (string by reference), 
+  TRUE for sucess, FALSE and error message
 Code adapted from 3_5_stat_example 
 */
-char *findLargestFileFromPrefix()
+int findLargestFileFromPrefix(char *fileToProcess)
 {
   DIR *currDir = opendir(".");
   struct dirent *dirPtr;
@@ -65,14 +73,14 @@ char *findLargestFileFromPrefix()
 
   struct file_data largest;
 
-  //Sets initial largest size to 0 to default largest to first file
+  // Sets initial largest size to 0 to default largest to first file
   largest.size = 0;
 
   while ((dirPtr = readdir(currDir)) != NULL)
   {
     if (stringMatchesPrefixAndExtension(dirPtr->d_name))
     {
-      //Get metadata for current file entry
+      // Get metadata for current file entry
       stat(dirPtr->d_name, &dirMetaData);
       if (largest.size == 0 || dirMetaData.st_size > largest.size)
       {
@@ -82,7 +90,16 @@ char *findLargestFileFromPrefix()
     }
   }
   closedir(currDir);
-  return largest.name;
+
+  // If not file was found in the loop
+  if (largest.size == 0)
+  {
+    printf("%s", NO_FILE_FOUND_IN_FOLDER_MSG);
+    return FALSE;
+  }
+  // Else copy
+  strcpy(fileToProcess, largest.name);
+  return TRUE;
 }
 
 /*
@@ -114,7 +131,6 @@ int findFilenameFromuserInput(char *userInput)
     if (strcmp(dirPtr->d_name, userInput) == 0)
     {
       closedir(currDir);
-      free(dirPtr);
       return TRUE;
     }
   }
@@ -123,8 +139,6 @@ int findFilenameFromuserInput(char *userInput)
   free(dirPtr);
   return FALSE;
 }
-
-int mkdir(const char *pathname, mode_t mode);
 
 /*
 Creates a new directory by concatenating ONID + movies + 
@@ -147,4 +161,83 @@ int createFolderWithRandom(char *dirname)
   if (status)
     printf(DIRECTORY_CREATION_SUCCESS_MSG, dirname);
   return status;
+}
+
+/*
+Function to create a directory, file per movie year with their titles
+Input: filename (string)
+Output: TRUE for successful file creation, FALSE for failure
+*/
+int processFile(char *filename)
+{
+  printFileToProcessMessage(filename);
+
+  // Allocate memory for directory name
+  char *dirname = (char *)calloc(MAX_POSIX_FILENAME_LENGTH, sizeof(char));
+  createFolderWithRandom(dirname);
+
+  // Create movie linked list reading from file passed as param
+  struct movie *movieList = createMovieList(filename);
+
+  // Assert movie list creation was successful
+  if (!movieListHasContent(movieList, filename))
+  {
+    return EXIT_FAILURE;
+  }
+
+  // Create array of unique movie years
+  int yearSize = 0;
+  int *uniqueMovieYears = createUniqueMovieYearsArr(movieList, &yearSize);
+
+  for (int yearIdx = 0; yearIdx < yearSize; yearIdx++)
+    createFileWithMoviesPerYear(movieList, uniqueMovieYears[yearIdx], dirname);
+
+  freeMovieList(movieList);
+  free(dirname);
+  return EXIT_SUCCESS;
+}
+
+/*
+Function to manage user interaction for file creation
+Input: filename (string) -> memory allocation by reference
+Output: TRUE for successful file creation, FALSE for failure
+*/
+int processFileMenu(char *filename)
+{
+  int option;
+  do
+  {
+    option = promptUserForFileProcessingMenuOption();
+    switch (option)
+    {
+    // 1 - pick the largest file
+    case 1:
+      if (findLargestFileFromPrefix(filename))
+      {
+        processFile(filename);
+        return TRUE;
+      }
+      break;
+    // 2 - pick the smallest file
+    case 2:
+      if (findSmallestFileFromPrefix(filename))
+      {
+        processFile(filename);
+        return TRUE;
+      }
+      break;
+    // 3 - to specify the name of a file
+    case 3:
+      if (findFilenameFromuserInput(filename))
+      {
+        processFile(filename);
+        return TRUE;
+      }
+      break;
+    // Other - Print bad input message
+    default:
+      printWrongOptionMessage();
+    }
+  } while (TRUE);
+  return 0;
 }
