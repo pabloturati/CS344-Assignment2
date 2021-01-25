@@ -7,11 +7,10 @@ Licence: MIT. Refer to `LICENSE` for details.
 
 This application provides the following functionality
 
-- Reads directory entries
-- Finds a file in the current directory based on user specified criteria
-- Reads and processes the data in the chosen file
-- Creates a directory
-- Creates new files in the newly created directory and writes processed data to these files
+- Reads all comma-separed-value files in the root of the document that starts with the prefix `movies_`. 
+- Finds the smallest, the largest or any .cvs file specifically requested by the user.
+- For each request, creates a folder with a random number
+- In that new directory, it creates individual files with the names of movies per year.
 
 ## Compile instructions
 
@@ -33,13 +32,23 @@ This will generate a `movies_by_year` exectable file as output. Refer to the nex
 
 Refer to the contents of `compileApp.sh` for a detailed command list on how to manually compile using command line.  Notice that this project was designed to be compiled with GNU99 standards.
 
+### Option 3.  Compile and run in sigle step
+
+`compileApp.sh` accepts the flag `-e`, in which case it will compile, generate the executable and immediately run it.  To do this run:
+
+`$ compileApp.sh -e`
+
 ## Run procedure
 
 Once the application executable has been created `movies_by_year`. It can be run as follows:
 
 `$ ./movies_by_year`
 
-Where movies_sample_file must be a comma-separated file (.csv) with the following structure and application data type interpretation:
+To compile and run in a single step run: `$ compileApp.sh -e`
+
+## Input File data structure
+
+Files used as input must be a comma-separated file (.csv) with the following structure and application data type interpretation:
 
  - **Movie Title** :: string
  - **Year** :: integer number
@@ -47,6 +56,7 @@ Where movies_sample_file must be a comma-separated file (.csv) with the followin
  - **Rating Value** :: floating point number
 
 First line of the input file is expected to contain headers, therefore data reading starts from second line.
+Note that for smallest and largest file functionality to work, the file name must start with the prefix `movies_`
 
 ## Additional resources
 
@@ -61,9 +71,9 @@ root
 ├── constants
 │   ├── constants.c
 │   └── constants.h
-└── movieList
-    ├── movieList.c
-    └── movieList.h
+├── movieList
+│   ├── movieList.c
+│   └── movieList.h
 └── fileHandlers
     ├── fileHandlers.c
     └── fileHandlers.h
