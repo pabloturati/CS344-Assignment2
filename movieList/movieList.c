@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include "movieList.h"
 #include "../constants/constants.h"
 
@@ -122,6 +123,7 @@ void createFileWithMoviesPerYear(struct movie *head, unsigned short year, char *
   // Open File for writing
   FILE *filePtr;
   filePtr = fopen(fullPath, "w+");
+  chmod(fullPath, FILE_PERMISSIONS);
 
   // Find all the movies in the specific year
   size_t count = 0;

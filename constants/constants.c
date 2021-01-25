@@ -10,6 +10,7 @@ char *MOVIE_STR = "movies";
 int UPPER_RAN_LIM = 99999;
 int LOW_RAN_LIM = 0;
 int DIR_PERMISSIONS = 0750;
+int FILE_PERMISSIONS = 0640;
 char *CSV_FILE_EXTENSION = ".csv";
 
 // User interface messages
