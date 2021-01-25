@@ -10,6 +10,7 @@ char *MOVIE_STR = "movies";
 int UPPER_RAN_LIM = 99999;
 int LOW_RAN_LIM = 0;
 int DIR_PERMISSIONS = 0750;
+char *CSV_FILE_EXTENSION = ".csv";
 
 // User interface messages
 char *USER_MAIN_MENU_LIST = "\n1. Select file to process\n2. Exit the program\n";
@@ -24,8 +25,9 @@ char *FILENAME_NOT_FOUND_MSG = "\nFile named \"%s\" was not found in this direct
 char *LIST_CREATION_SUCCESS_MSG = "\nProcessed file %s and parsed data for %zu movies\n";
 char *LIST_CREATION_SUCCESS_EMPTY_MSG = "Processed file but list is empty\n\n";
 char *DIRECTORY_CREATION_SUCCESS_MSG = "Created directory with name %s\n";
+char *INVALID_FILENAME_MSG = "Sorry, \"%s\" is not a CSV file\n";
 
-// User interaction methods
+/**********  User interaction methods     ********/
 
 /* 
 Handles option request
@@ -102,7 +104,7 @@ void printFileToProcessMessage(char *filename)
   printf(PROCESSING_FILE_CONFIRM_MSG, filename);
 }
 
-// Data handling methods
+/**********  Data handling and validation methods   ********/
 
 /*
 Function that matches a string to a prefix
@@ -140,4 +142,31 @@ int arrayContainsValue(int *arr, int arrSize, int val)
       return 1;
   }
   return 0;
+}
+
+/* 
+Function to validate if a filename contains a specific extension
+Input: filename (string) -> filename to analize, 
+  expectedExt (string) -> expected extension
+Output: 1 for True, 0 for False
+*/
+
+int filenameContainsExtension(char *filename, char *expectedExt)
+{
+  // Creates substring with from the last point (the extension point) of filename
+  char *curFileExt = strrchr(filename, '.');
+  // Returns TRUE for non-empty extension that matches the expected extension
+  return curFileExt != NULL && strcmp(curFileExt, expectedExt) == 0;
+}
+
+/* 
+Validates that string matches prefix and has CSV extension
+Input: filename (string) -> filename to analize, 
+Output: 1 for True, 0 for False
+*/
+
+int stringMatchesPrefixAndExtension(char *filename)
+{
+  return strMatchesPrefix(filename, FILE_NAME_PREFIX) &&
+         filenameContainsExtension(filename, CSV_FILE_EXTENSION);
 }

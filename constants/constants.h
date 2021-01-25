@@ -21,8 +21,10 @@ char *FILENAME_PROMPT;
 char *LIST_CREATION_SUCCESS_MSG;
 char *LIST_CREATION_SUCCESS_EMPTY_MSG;
 char *DIRECTORY_CREATION_SUCCESS_MSG;
+char *CSV_FILE_EXTENSION;
+char *INVALID_FILENAME_MSG;
 
-int handleInputOptionRequest(char *optionPromptMessage, char *menuList);
+int handleInputOptionRequest(char *, char *);
 int promptUserForMainMenuOption();
 int promptUserForFileProcessingMenuOption();
 int printGoodByeAndReturnSuccess();
@@ -32,5 +34,7 @@ void printFileToProcessMessage(char *);
 void printFileNotFoundMessage(char *);
 int createRandomNumberInRange();
 int arrayContainsValue(int *, int, int);
+int filenameContainsExtension(char *, char *);
+int stringMatchesPrefixAndExtension(char *);
 
 #endif

@@ -36,7 +36,7 @@ char *findSmallestFileFromPrefix()
 
   while ((dirPtr = readdir(currDir)) != NULL)
   {
-    if (strMatchesPrefix(dirPtr->d_name, FILE_NAME_PREFIX))
+    if (stringMatchesPrefixAndExtension(dirPtr->d_name))
     {
       //Get metadata for current file entry
       stat(dirPtr->d_name, &dirMetaData);
@@ -70,7 +70,7 @@ char *findLargestFileFromPrefix()
 
   while ((dirPtr = readdir(currDir)) != NULL)
   {
-    if (strMatchesPrefix(dirPtr->d_name, FILE_NAME_PREFIX))
+    if (stringMatchesPrefixAndExtension(dirPtr->d_name))
     {
       //Get metadata for current file entry
       stat(dirPtr->d_name, &dirMetaData);
@@ -96,22 +96,31 @@ int findFilenameFromuserInput(char *userInput)
   printf("%s", FILENAME_PROMPT);
   scanf("%s", userInput);
 
+  // Validate userInput is CSV file
+  if (!filenameContainsExtension(userInput, CSV_FILE_EXTENSION))
+  {
+    // Notify of invalid extension
+    printf(INVALID_FILENAME_MSG, userInput);
+    return FALSE;
+  }
+
   DIR *currDir = opendir(".");
   struct dirent *dirPtr;
   struct stat dirMetaData;
 
   while ((dirPtr = readdir(currDir)) != NULL)
   {
+    // If current filename matches user input
     if (strcmp(dirPtr->d_name, userInput) == 0)
     {
       closedir(currDir);
-      // free(dirPtr);
+      free(dirPtr);
       return TRUE;
     }
   }
   printFileNotFoundMessage(userInput);
   closedir(currDir);
-  // free(dirPtr);
+  free(dirPtr);
   return FALSE;
 }
 
