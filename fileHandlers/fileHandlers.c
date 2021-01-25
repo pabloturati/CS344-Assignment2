@@ -98,7 +98,12 @@ int findLargestFileFromPrefix(char *filename)
     return FALSE;
   }
   // Else copy
-  strcpy(filename, largest.name);
+  // strcpy(filename, largest.name);
+  for (int i = 0; i < strlen(largest.name); i++)
+  {
+    filename[i] = largest.name[i];
+  }
+  filename[strlen(largest.name)] = '\0';
   return processFile(filename);
 }
 

@@ -38,7 +38,7 @@ function main() {
 
   # Handles parameters to execute.
   # Param e -> triggers executable
-  while getopts "e" flag; do
+  while getopts "ev" flag; do
     case $flag in
     e) ./movies_by_year ;;
     v) valgrind ./movies_by_year ;;
