@@ -21,7 +21,7 @@ Output: name of smallest file in current directory (string by reference),
   TRUE for sucess, FALSE and error message
 Code adapted from 3_5_stat_example 
 */
-int findSmallestFileFromPrefix(char *fileToProcess)
+int findSmallestFileFromPrefix(char *filename)
 {
   DIR *currDir = opendir(".");
   struct dirent *dirPtr;
@@ -54,8 +54,8 @@ int findSmallestFileFromPrefix(char *fileToProcess)
     return FALSE;
   }
   // Else copy
-  strcpy(fileToProcess, smallest.name);
-  return TRUE;
+  strcpy(filename, smallest.name);
+  return processFile(filename);
 }
 
 /*
@@ -65,7 +65,7 @@ Output: name of smallest file in current directory (string by reference),
   TRUE for sucess, FALSE and error message
 Code adapted from 3_5_stat_example 
 */
-int findLargestFileFromPrefix(char *fileToProcess)
+int findLargestFileFromPrefix(char *filename)
 {
   DIR *currDir = opendir(".");
   struct dirent *dirPtr;
@@ -98,8 +98,8 @@ int findLargestFileFromPrefix(char *fileToProcess)
     return FALSE;
   }
   // Else copy
-  strcpy(fileToProcess, largest.name);
-  return TRUE;
+  strcpy(filename, largest.name);
+  return processFile(filename);
 }
 
 /*
@@ -131,7 +131,7 @@ int findFilenameFromuserInput(char *userInput)
     if (strcmp(dirPtr->d_name, userInput) == 0)
     {
       closedir(currDir);
-      return TRUE;
+      return processFile(userInput);
     }
   }
   printFileNotFoundMessage(userInput);
@@ -182,7 +182,7 @@ int processFile(char *filename)
   // Assert movie list creation was successful
   if (!movieListHasContent(movieList, filename))
   {
-    return EXIT_FAILURE;
+    return FALSE;
   }
 
   // Create array of unique movie years
@@ -194,7 +194,7 @@ int processFile(char *filename)
 
   freeMovieList(movieList);
   free(dirname);
-  return EXIT_SUCCESS;
+  return TRUE;
 }
 
 /*
@@ -213,26 +213,17 @@ int processFileMenu(char *filename)
     // 1 - pick the largest file
     case 1:
       if (findLargestFileFromPrefix(filename))
-      {
-        processFile(filename);
-        return TRUE;
-      }
+        return EXIT_SUCCESS;
       break;
     // 2 - pick the smallest file
     case 2:
       if (findSmallestFileFromPrefix(filename))
-      {
-        processFile(filename);
-        return TRUE;
-      }
+        return EXIT_SUCCESS;
       break;
     // 3 - to specify the name of a file
     case 3:
       if (findFilenameFromuserInput(filename))
-      {
-        processFile(filename);
-        return TRUE;
-      }
+        return EXIT_SUCCESS;
       break;
     // Other - Print bad input message
     default:
