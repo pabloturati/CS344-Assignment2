@@ -21,22 +21,11 @@ char *GOODBYE_MSG = "Freeing allocated memory done, good bye!\n";
 char *PROCESSING_FILE_CONFIRM_MSG = "\nNow processing the chosen file named %s\n";
 char *FILENAME_PROMPT = "Enter the complete file name: ";
 char *FILENAME_NOT_FOUND_MSG = "\nFile named \"%s\" was not found in this directory\n";
-char *LIST_CREATION_SUCCESS_MSG = "Processed file %s and parsed data for %zu movies\n\n";
+char *LIST_CREATION_SUCCESS_MSG = "\nProcessed file %s and parsed data for %zu movies\n";
 char *LIST_CREATION_SUCCESS_EMPTY_MSG = "Processed file but list is empty\n\n";
+char *DIRECTORY_CREATION_SUCCESS_MSG = "Created directory with name %s\n";
 
-// Year messages
-char *INPUT_YEAR_MSG = "Enter the year for which you want to see movies: ";
-char *NO_YEAR_RESULT_MSG = "No data about movies released in the year %hu\n\n";
-char *SELECTED_YEAR_MSG = "You selected %hu\n\n";
-char *TOTAL_RECORDS_FOUND_IN_YEAR = "\n%hu total records found in year %hu\n\n";
-
-// Language messages
-char *INPUT_LANGUAGE = "Enter the language for which you want to see movies:";
-char *LANGUAGE_CONFIRM_MSG = "You selected %s.\n\n";
-char *LANGUAGE_RECORDS_MSG = "\nFound %d records in %s\n";
-char *LANGUAGE_EMPTY_RECORDS_MSG = "No data about movies released in %s\n\n";
-
-// User request and interaction methods
+// User interaction methods
 
 /* 
 Handles option request

@@ -59,11 +59,17 @@ dkms.conf
 movies_sample_1.csv
 
 # Compiled files
-movies
+movies_by_year
 
 # Markdown outputs
 README.jpeg
 README.pdf
 
-#System files
+# System files
 .DS_Store
+
+# Process file outputs
+turatip.movies.*
+
+# Testfiles
+movies_*

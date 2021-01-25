@@ -4,6 +4,6 @@
 char *findLargestFileFromPrefix();
 char *findSmallestFileFromPrefix();
 int findFilenameFromuserInput(char *);
-int createFolderWithRandom();
+int createFolderWithRandom(char *);
 
 #endif

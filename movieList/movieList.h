@@ -13,9 +13,7 @@ struct movie
 struct movie *createMovieList(char *);
 struct movie *createMovieNode(char *);
 int *createUniqueMovieYearsArr(struct movie *, int *);
-void printMoviesWithHighestRatingsPerYear(struct movie *, int *, int);
-void filteMoviesByYear(struct movie *, unsigned short);
-void printMoviesOfCertainLanguage(struct movie *, char *language);
+void createFileWithMoviesPerYear(struct movie *, unsigned short, char *);
 int movieListHasContent(struct movie *, char *);
 void freeMovieList(struct movie *);
 

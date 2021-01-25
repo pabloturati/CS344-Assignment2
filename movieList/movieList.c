@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include "movieList.h"
 #include "../constants/constants.h"
 
@@ -108,93 +109,36 @@ int *createUniqueMovieYearsArr(struct movie *head, int *size)
 }
 
 /* 
-Prints highest rated movie to std out (screen) in format:
-YEAR RATING (single decimal floating point) TITLE
-Input: list head (struct movie *), uniqueYears(array of int), arrSize (int)
-Output: (void) prints to stdout (screen).
-*/
-void printMoviesWithHighestRatingsPerYear(struct movie *head, int *uniqueYears, int arrSize)
-{
-  for (int i = 0; i < arrSize; i++)
-  {
-    struct movie *curr = head;
-    struct movie *highest = NULL;
-    while (curr)
-    {
-      if (curr->year == uniqueYears[i])
-      {
-        if (highest == NULL)
-        {
-          highest = curr;
-        }
-        else if (curr->rating > highest->rating)
-        {
-          highest = curr;
-        }
-      }
-      curr = curr->next;
-    }
-    printf("%d %.1f %s\n", uniqueYears[i], highest->rating, highest->title);
-  }
-  printf("\n");
-}
-
-/* 
-Prints to stdout (screen) movies that contain (exact match) the selected language. 
-Filter operation is done by substring match.  Print format is:  YEAR TITLE
-Input: list head (struct movie *), language (string)
-Output: (void) prints to stdout (screen).
-*/
-void printMoviesOfCertainLanguage(struct movie *head, char *language)
-{
-  struct movie *curr = head;
-  int count = 0;
-  while (curr)
-  {
-    char *ptrToStrMatch = strstr(curr->languages, language);
-    if (ptrToStrMatch != NULL)
-    {
-      printf("%d %s\n", curr->year, curr->title);
-      ++count;
-    }
-    curr = curr->next;
-  }
-  if (count == 0)
-  {
-    printf(LANGUAGE_EMPTY_RECORDS_MSG, language);
-  }
-  else
-  {
-    printf(LANGUAGE_RECORDS_MSG, count, language);
-  }
-}
-
-/* 
-Filter operation is done by substring match.  Print format is:  YEAR TITLE
+Creates a new file inside a specified directory and prints titles per year
 Input: list head (struct movie *), year (string)
-Output: (void) prints to stdout (screen).
+Output: (void) prints file.
 */
-void filteMoviesByYear(struct movie *head, unsigned short year)
+void createFileWithMoviesPerYear(struct movie *head, unsigned short year, char *dirname)
 {
+  // Creates a full path for file (dirname + filename)
+  char *fullPath = (char *)calloc((MAX_POSIX_FILENAME_LENGTH * 2 + 2), sizeof(char));
+  sprintf(fullPath, "./%s/%hu.txt", dirname, year);
+
+  // Open File for writing
+  FILE *filePtr;
+  filePtr = fopen(fullPath, "w+");
+
+  // Find all the movies in the specific year
   size_t count = 0;
   struct movie *curr = head;
   while (curr != NULL)
   {
     if (curr->year == year)
     {
-      printf("%s\n", curr->title);
+      // Prints each titme
+      fprintf(filePtr, "%s\n", curr->title);
       ++count;
     }
     curr = curr->next;
   }
-  if (count == 0)
-  {
-    printf(NO_YEAR_RESULT_MSG, year);
-  }
-  else
-  {
-    printf(TOTAL_RECORDS_FOUND_IN_YEAR, count, year);
-  }
+
+  // Close file
+  fclose(filePtr);
 }
 
 /* 
@@ -208,10 +152,10 @@ void freeMovieList(struct movie *list)
   while (curr != NULL)
   {
     struct movie *next = curr->next;
-    //Releases movie fields
+    // Releases movie fields
     free(curr->title);
     free(curr->languages);
-    //Releases movie object
+    // Releases movie object
     free(curr);
     curr = next;
   }
@@ -225,13 +169,13 @@ Output: listLenght (integer). 0 for empty.
 int movieListHasContent(struct movie *list, char *fileName)
 {
   size_t listLength = 0;
-  //Counts list objects until last one
+  // Counts list objects until last one
   while (list != NULL)
   {
     list = list->next;
     ++listLength;
   }
-  //Print result to screen
+  // Print result to screen
   if (listLength > 0)
   {
     printf(LIST_CREATION_SUCCESS_MSG, fileName, listLength);

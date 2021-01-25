@@ -2,7 +2,7 @@
 
 # Cleans previously compiled files and created folders
 function preCompileClean() {
-  rm -f movies constants.o fileHandlers.o movieList.o lib_movies.a pturati.movies.*
+  rm -rf movies_by_year constants.o fileHandlers.o movieList.o lib_movies.a turatip.movies.*
 }
 
 # Cleans space of temporary compile files
@@ -22,7 +22,7 @@ function generateModuleObjectsAndArchive() {
 
 # Compiles main
 function compileMainAndArchive() {
-  gcc --std=gnu99 -o movies main.c lib_movies.a
+  gcc --std=gnu99 -o movies_by_year main.c lib_movies.a
 }
 
 function main() {
@@ -40,7 +40,7 @@ function main() {
   # Param e -> triggers executable
   while getopts "e" flag; do
     case $flag in
-    e) ./movies ;;
+    e) ./movies_by_year ;;
     esac
     shift
   done

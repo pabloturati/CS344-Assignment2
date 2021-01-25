@@ -20,18 +20,7 @@ char *PROCESSING_FILE_CONFIRM_MSG;
 char *FILENAME_PROMPT;
 char *LIST_CREATION_SUCCESS_MSG;
 char *LIST_CREATION_SUCCESS_EMPTY_MSG;
-
-// Year messages
-char *INPUT_YEAR_MSG;
-char *NO_YEAR_RESULT_MSG;
-char *SELECTED_YEAR_MSG;
-char *TOTAL_RECORDS_FOUND_IN_YEAR;
-
-// Language messages
-char *INPUT_LANGUAGE;
-char *LANGUAGE_CONFIRM_MSG;
-char *LANGUAGE_RECORDS_MSG;
-char *LANGUAGE_EMPTY_RECORDS_MSG;
+char *DIRECTORY_CREATION_SUCCESS_MSG;
 
 int handleInputOptionRequest(char *optionPromptMessage, char *menuList);
 int promptUserForMainMenuOption();
