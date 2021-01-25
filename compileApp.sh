@@ -41,6 +41,7 @@ function main() {
   while getopts "e" flag; do
     case $flag in
     e) ./movies_by_year ;;
+    v) valgrind ./movies_by_year ;;
     esac
     shift
   done

@@ -45,6 +45,7 @@ Once the application executable has been created `movies_by_year`. It can be run
 `$ ./movies_by_year`
 
 To compile and run in a single step run: `$ compileApp.sh -e`
+To compile and run memory leaks debugger run: `$ compileApp.sh -v`
 
 ## Input File data structure
 
